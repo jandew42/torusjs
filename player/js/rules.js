@@ -25,23 +25,53 @@ eidogo.Rules.prototype = {
         if (this.board.getStone(pt) != this.board.EMPTY) {
             return false;
         }
-        // TODO: check for suicide? (allowed in certain rulesets)    
-        // TODO: ko
+        // TODO: check for win
+        // TODO: pretend doCaptures
+        // TODO: check for suicide
+        // TODO: check for superko
         return true;
     },
     apply: function(pt, color) {
-        var captures = this.doCaptures(pt, color);
-        if (captures < 0) {
-            // make sure suicides give proper points (some rulesets allow it)
-            color = -color;
-            captures = -captures;
-        }
-        color = color == this.board.WHITE ? "W" : "B";
-        this.board.captures[color] += captures;
+        this.doCaptures(pt, color);
+        // TODO: remove all cases of this.board.captures from other code
     },
     /**
-     * Thanks to Arno Hollosi for the capturing algorithm
+     * Checks for and performs all captures along diagonals.
      */
+    doCaptures: function(pt, color) {
+        this.doCapture(pt, {x:  1, y:  1}, color);
+        this.doCapture(pt, {x:  1, y: -1}, color);
+        this.doCapture(pt, {x: -1, y:  1}, color);
+        this.doCapture(pt, {x: -1, y: -1}, color);
+    },
+    /**
+     * Checks for and performs captures along one direction.
+     * Assumes pt is occupied with a stone of input color.
+     */
+    doCapture: function (pt, dpt, color) {
+        console.log("start");
+        console.log(dpt);
+        var cur = pt;
+        var bS = Number(this.board.boardSize);
+        while (true) {
+            cur = {x: (cur.x + dpt.x + bS)%bS,
+                   y: (cur.y + dpt.y + bS)%bS};
+            if (this.board.getStone(cur) == this.board.EMPTY) {
+                this.pendingCaptures = [];
+                return;
+            }
+            if (this.board.getStone(cur) == color) {
+                while (this.pendingCaptures.length) {
+                    this.board.addStone(this.pendingCaptures.pop(),
+                        this.board.EMPTY);
+                }
+                return;
+            }
+            this.pendingCaptures.push(cur);
+        }
+    }
+    /**
+     * Thanks to Arno Hollosi for the capturing algorithm
     doCaptures: function(pt, color) {
         var captures = 0;
         captures += this.doCapture({x: pt.x-1, y: pt.y}, color);
@@ -104,4 +134,5 @@ eidogo.Rules.prototype = {
 
         return 0;
     }
+     */
 }

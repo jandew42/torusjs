@@ -1099,68 +1099,31 @@ return false;
 }
 return true;
 },apply:function(pt,_6){
-var _7=this.doCaptures(pt,_6);
-if(_7<0){
-_6=-_6;
-_7=-_7;
-}
-_6=_6==this.board.WHITE?"W":"B";
-this.board.captures[_6]+=_7;
-},doCaptures:function(pt,_9){
-var _a=0;
-_a+=this.doCapture({x:pt.x-1,y:pt.y},_9);
-_a+=this.doCapture({x:pt.x+1,y:pt.y},_9);
-_a+=this.doCapture({x:pt.x,y:pt.y-1},_9);
-_a+=this.doCapture({x:pt.x,y:pt.y+1},_9);
-_a-=this.doCapture(pt,-_9);
-return _a;
-},doCapture:function(pt,_c){
-var x,y;
-var _f=this.board.boardSize;
-if(pt.x<0||pt.y<0||pt.x>=_f||pt.y>=_f){
-return 0;
-}
-if(this.board.getStone(pt)==_c){
-return 0;
-}
+this.doCaptures(pt,_6);
+},doCaptures:function(pt,_8){
+this.doCapture(pt,{x:1,y:1},_8);
+this.doCapture(pt,{x:1,y:-1},_8);
+this.doCapture(pt,{x:-1,y:1},_8);
+this.doCapture(pt,{x:-1,y:-1},_8);
+},doCapture:function(pt,_a,_b){
+console.log("start");
+console.log(_a);
+var _c=pt;
+var bS=Number(this.board.boardSize);
+while(true){
+_c={x:(_c.x+_a.x+bS)%bS,y:(_c.y+_a.y+bS)%bS};
+if(this.board.getStone(_c)==this.board.EMPTY){
 this.pendingCaptures=[];
-if(this.doCaptureRecurse(pt,_c)){
-return 0;
+return;
 }
-var _10=this.pendingCaptures.length;
+if(this.board.getStone(_c)==_b){
 while(this.pendingCaptures.length){
 this.board.addStone(this.pendingCaptures.pop(),this.board.EMPTY);
 }
-return _10;
-},doCaptureRecurse:function(pt,_12){
-if(pt.x<0||pt.y<0||pt.x>=this.board.boardSize||pt.y>=this.board.boardSize){
-return 0;
+return;
 }
-if(this.board.getStone(pt)==_12){
-return 0;
+this.pendingCaptures.push(_c);
 }
-if(this.board.getStone(pt)==this.board.EMPTY){
-return 1;
-}
-for(var i=0;i<this.pendingCaptures.length;i++){
-if(this.pendingCaptures[i].x==pt.x&&this.pendingCaptures[i].y==pt.y){
-return 0;
-}
-}
-this.pendingCaptures.push(pt);
-if(this.doCaptureRecurse({x:pt.x-1,y:pt.y},_12)){
-return 1;
-}
-if(this.doCaptureRecurse({x:pt.x+1,y:pt.y},_12)){
-return 1;
-}
-if(this.doCaptureRecurse({x:pt.x,y:pt.y-1},_12)){
-return 1;
-}
-if(this.doCaptureRecurse({x:pt.x,y:pt.y+1},_12)){
-return 1;
-}
-return 0;
 }};
 
 (function(){
