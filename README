@@ -24,6 +24,12 @@ Specifically, the rules are:
 4) Superko is in effect.
    (No move can bring the board to a state that has already occurred.)
 
+The order of operations is related to the listing above:
+1) Wins made by a move are parsed, and occur.
+2) Captures made by a move are parsed.
+3) Suicide is checked and can reverse a non-winning move.
+4) Superko is checked and can reverse a non-winning move.
+
 == The Client, and Plans ==
 
 This client is built off of eidogo as a base.
