@@ -13,7 +13,8 @@
 var ua = navigator.userAgent.toLowerCase();
 var uav = (ua.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [])[1];
 eidogo.browser = {ua: ua, ver: uav, ie: /msie/.test(ua) && !/opera/.test(ua),
-    moz: /mozilla/.test(ua) && !/(compatible|webkit)/.test(ua)};
+    moz: /mozilla/.test(ua) && !/(compatible|webkit)/.test(ua),
+    safari3: /webkit/.test(ua) && parseInt(uav, 10) >= 420};
 
 eidogo.util = {
 
@@ -21,13 +22,8 @@ eidogo.util = {
         return document.getElementById(id);
     },
     
-    // Adapted from jQuery
-    ajax: function(method, url, params, successFn, failureFn, scope, timeout) {
-        method = method.toUpperCase();
-        var xhr = window.ActiveXObject ?
-            new ActiveXObject("Microsoft.XMLHTTP") :
-            new XMLHttpRequest();
-        var qs = null;
+    makeQueryString: function(params) {
+        var qs = "";
         if (params && typeof params == "object") {
             var pairs = [];
             for (var key in params) {
@@ -43,6 +39,17 @@ eidogo.util = {
             }
             qs = pairs.join("&").replace(/%20/g, "+");
         }
+        return qs;
+    },
+    
+    // Adapted from jQuery
+    ajax: function(method, url, params, successFn, failureFn, scope, timeout) {
+        method = method.toUpperCase();
+        var xhr = window.ActiveXObject ?
+            new ActiveXObject("Microsoft.XMLHTTP") :
+            new XMLHttpRequest();
+        var qs = (params && typeof params == "object" ?
+            eidogo.util.makeQueryString(params) : null);
         if (qs && method == "GET" ) {
             url += (url.match(/\?/) ? "&" : "?") + qs;
             qs = null;
@@ -137,6 +144,7 @@ eidogo.util = {
     },
     
     addEvent: function(el, eventType, handler, arg, override) {
+        if (!el) return;
         if (override) {
             handler = handler.bind(arg);
         } else if (arg) {
@@ -154,12 +162,13 @@ eidogo.util = {
     },
     
     getElClickXY: function(e, el, noScroll) {
+        var doc = el.ownerDocument;
         // for IE
         if(!e.pageX) {
-            e.pageX = e.clientX + (document.documentElement.scrollLeft ||
-                document.body.scrollLeft);
-            e.pageY = e.clientY + (document.documentElement.scrollTop ||
-                document.body.scrollTop);
+            e.pageX = e.clientX + (doc.documentElement.scrollLeft ||
+                doc.body.scrollLeft);
+            e.pageY = e.clientY + (doc.documentElement.scrollTop ||
+                doc.body.scrollTop);
         }
         var elXY = eidogo.util.getElXY(el, noScroll);
         return [e.pageX - elXY[0], e.pageY - elXY[1]];
@@ -231,22 +240,26 @@ eidogo.util = {
     },
     
     getElXY: function(el, noScroll) {
-        if (el._x && el._y) return [el._x, el._y];
-        var node = el, elX = 0, elY = 0, parent = el.parentNode, sx = 0, sy = 0;
-        while (node) {
-            elX += node.offsetLeft;
-            elY += node.offsetTop;
-            node = node.offsetParent ? node.offsetParent : null;
+        var node = el, elX = 0, elY = 0, parent = el.parentNode,
+            sx = 0, sy = 0, doc = el.ownerDocument;
+        if (el.getBoundingClientRect) {
+            var rect = el.getBoundingClientRect();
+            elX = rect.left + Math.max(doc.documentElement.scrollLeft, doc.body.scrollLeft);
+            elY = rect.top + Math.max(doc.documentElement.scrollTop, doc.body.scrollTop);
+        } else {
+            while (node) {
+                elX += node.offsetLeft;
+                elY += node.offsetTop;
+                node = node.offsetParent ? node.offsetParent : null;
+            }
+            while (!noScroll && parent && parent.tagName && !/^body|html$/i.test(parent.tagName)) {
+                sx += parent.scrollLeft;
+                sy += parent.scrollTop;
+                elX -= parent.scrollLeft;
+                elY -= parent.scrollTop;
+                parent = parent.parentNode;
+            }
         }
-        while (!noScroll && parent && parent.tagName && !/^body|html$/i.test(parent.tagName)) {
-            sx += parent.scrollLeft;
-            sy += parent.scrollTop;
-            elX -= parent.scrollLeft;
-            elY -= parent.scrollTop;
-            parent = parent.parentNode;
-        }
-        el._x = elX;
-        el._y = elY;
         return [elX, elY, sx, sy];
     },
     
@@ -280,6 +293,12 @@ eidogo.util = {
             }
         }
         return scriptPath;
+    },
+    
+    numProperties: function(obj) {
+        var count = 0;
+        for (var i in obj) count++;
+        return count;
     }
     
 };

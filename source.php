@@ -2,10 +2,10 @@
 
 <div id="text-content">
 
-<h2>Player Source Code</h2>
+<h2>Embedded SGF Viewer</h2>
 
 <p>The EidoGo Player (SGF viewer and editor) is an independent piece and can be
-    plugged into any webpage. The basic Player is entirely client-side (browser-based)
+    embedded into any webpage. The basic Player is entirely client-side (browser-based)
     and does not include the joseki tutor, pattern searching, GNU Go, or saving features.
     To use these features, you must set up code server-side (see site source code below).</p>
 
@@ -16,7 +16,8 @@
 <h3>Quick Start</h3>
 
 <p>Download the Player from <a href="http://code.google.com/p/eidogo/downloads/list">Google Code
-download page</a> and put the following into your webpage:</p>
+download page</a> and put the following into your webpage (replace the <code>src</code> and
+<code>sgf</code> paths as appropriate):</p>
 
 <pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;player/js/all.compressed.js&quot;&gt;&lt;/script&gt;
 &lt;div class=&quot;eidogo-player-auto&quot; sgf=&quot;path/to/sgf/file.sgf&quot;&gt;&lt;/div&gt;
@@ -40,12 +41,12 @@ download page</a> and put the following into your webpage:</p>
 <h2>Site Source Code</h2>
 
 <p>The latest, cutting-edge source code for the entire EidoGo site, both client-side and server-side,
-    is available in a Subversion repository. You can get at it in two ways:</p>
+    is available from github.com. You can get at it in two ways:</p>
 
 <ol>
-	<li><p><a href="http://eidogo.googlecode.com/svn/">Browse it on the web</a></p></li>
-	<li><p>Perform a checkout from the Subversion repository with the command:</p>
-		<pre><code>svn co http://eidogo.googlecode.com/svn/trunk/ eidogo</pre></code>
+	<li><p><a href="http://github.com/jkk/eidogo/tree/master">Browse or download it via the web</a></p></li>
+	<li><p>Clone the repository with git:</p>
+		<pre><code>git clone git://github.com/jkk/eidogo.git eidogo</pre></code>
 </ol>
 
 <p>Code contributions welcome!</p>

@@ -1,7 +1,7 @@
 .DS_Store
 *.pyc
 *.o
-php/db.php
+backend/db.php
 sgf/kjd*.sgf
 sgf/kjd*.sql
 sgf/dev/*
@@ -12,4 +12,5 @@ sgf/saved/*.sgf
 sgf/titles/*.sgf
 titles/titles.html
 titles/titles.db
-
+titles/news.html
+titles/lg.html

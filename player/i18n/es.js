@@ -9,11 +9,13 @@ eidogo.i18n = eidogo.i18n || {
     'no variations':    'ninguna',
     
     'tool':             'Herramienta',
+    'view':             'Saltar a jugada',
     'play':             'Jugar',
     'region':           'Seleccionar Región',
     'add_b':            'Piedra Negra',
     'add_w':            'Piedra Blanca',
     'edit comment':     'Editar Comentario',
+    'edit game info':   'Editar información de la partida',
     'done':             'Finalizado',
     'triangle':         'Triángulo',
     'square':           'Cuadrado',
@@ -21,7 +23,9 @@ eidogo.i18n = eidogo.i18n || {
     'x':                'X',
     'letter':           'Letra',
     'number':           'Número',
+    'label':            'Custom Label',
     'dim':              'Sombrear',
+    'clear':            'Borrar marca',
     'score':            'Puntaje', // as in score tool
     'score est':        'Estimar puntaje',
     'search':           'Buscar',
@@ -33,8 +37,10 @@ eidogo.i18n = eidogo.i18n || {
     'no search url':    'URL de búsqueda no especificado.',
     'close search':     'cerrar búsqueda',
     'matches found':    'concordancias encontradas.', // as in, "12 matches found"
+    'show games':       'Show pro games with this position',
     'save to server':   'Guardar al Servidor',
     'download sgf':     'Descargar SGF',
+    'multi-game sgf':   'Multi-game SGF: ',
     'next game':        'Siguiente Partida',
     'previous game':    'Partida Anterior',
     'end of variation': 'Fin de la Variante',
@@ -99,6 +105,9 @@ eidogo.i18n = eidogo.i18n || {
     'black to play':    'Negro juega',
     'white to play':    'Blanco juega',
     'ho':               'Hotspot',
+    
+    'confirm delete':   'Has borrado todas las propiedades de esta posición. ¿Borrar posición y todas sus variantes?',
+    'position deleted': 'Posición borrada',
 
     'dom error':        'Error al buscar contenedor DOM',
     'error retrieving': 'Hubo un problema al recibir los datos de la partida.',

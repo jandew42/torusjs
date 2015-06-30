@@ -9,11 +9,13 @@ eidogo.i18n = eidogo.i18n || {
     'no variations':    'none',
     
     'tool':             'Tool',
+    'view':             'Jump to Move',
     'play':             'Play',
     'region':           'Select Region',
     'add_b':            'Black Stone',
     'add_w':            'White Stone',
     'edit comment':     'Edit Comment',
+    'edit game info':   'Edit Game Info',
     'done':             'Done',
     'triangle':         'Triangle',
     'square':           'Square',
@@ -21,7 +23,9 @@ eidogo.i18n = eidogo.i18n || {
     'x':                'X',
     'letter':           'Letter',
     'number':           'Number',
+    'label':            'Custom Label',
     'dim':              'Dim',
+    'clear':            'Clear Marker',
     'score':            'Score', // as in score tool
     'score est':        'Score Estimate',
     'search':           'Search',
@@ -33,8 +37,10 @@ eidogo.i18n = eidogo.i18n || {
     'no search url':    'No search URL provided.',
     'close search':     'close search',
     'matches found':    'matches found.', // as in, "12 matches found"
+    'show games':       'Show pro games with this position',
     'save to server':   'Save to Server',
     'download sgf':     'Download SGF',
+    'multi-game sgf':   'Multi-game SGF: ',
     'next game':        'Next Game',
     'previous game':    'Previous Game',
     'end of variation': 'End of variation',
@@ -99,6 +105,9 @@ eidogo.i18n = eidogo.i18n || {
     'black to play':    'Black to play',
     'white to play':    'White to play',
     'ho':               'Hotspot',
+    
+    'confirm delete':   'You\'ve removed all properties from this position.\n\nDelete this position and all sub-positions?',
+    'position deleted': 'Position deleted',
 
     'dom error':        'Error finding DOM container',
     'error retrieving': 'There was a problem retrieving the game data.',

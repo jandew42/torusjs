@@ -23,13 +23,13 @@
 
 function show_results($query) {
     $query = preg_replace("/[^a-zA-Z0-9 -]/", "", $query);
-    $db = sqlite3_open("kombilo/t1.db");
-    $res = sqlite3_query($db, "select * from games
+    $db = new SQLite3("kombilo/t1.db");
+    $res = $db->query("select * from games
         where pb like '%$query%' or pw like '%$query%' or ev like '%$query%' or date like '%$query%'
         order by date desc
         limit 300");
     $games = array();
-    while ($game = sqlite3_fetch_array($res)) $games[] = $game;
+    while ($game = $res->fetchArray()) $games[] = $game;
     if (!count($games)) {
         echo "<p>No games found matching &quot;$query&quot;.</p>";
         return;
@@ -52,7 +52,10 @@ if ($_GET['q']) {
     show_results($_GET['q']);
 } else {
     echo "<p>The game archive contains a representative sample of games from the last few hundred years.
-        Enter a query above to search by player name, event name, or date.</p>";
+        Enter a query above to search by player name, event name, or date.</p>
+        <p>Many games come from GoGoD, with their permission. If you are interested in having a full
+        collection of well over 50,000 pro games along with other enriching materials, please purchase their
+        product (<a href='http://www.gogod.co.uk'>http://www.gogod.co.uk</a>).</p>";
 }
 
 ?>
