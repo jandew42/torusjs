@@ -9,6 +9,7 @@ while complication arises from orthogonal methods
 of capture and win.
 
 Specifically, the rules are:
+
 1. The board is a 9x9 grid on a toroid.
    (This can be thought of as a normal 9x9 board,
    but to the left of the left side is the right side and vice-versa,
@@ -26,6 +27,7 @@ Specifically, the rules are:
    (No move can bring the board to a state that has already occurred.)
 
 The order of operations is related to the listing above:
+
 1. (N/A)
 2. Wins made by a move are parsed, and occur.
 3. Captures made by a move are parsed.
